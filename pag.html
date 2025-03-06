@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Revisão - Programação III - 2025</title>
+  <style>
+    .caixa {
+      border-style: solid;
+      border-width: 1px;
+    }
+  </style>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+  <h1 style="text-align: center;">Cadastro de Veículos</h1>
+  <div>
+    <div style="width: 71%; margin: 5px;" class="caixa">
+      <div>
+        <div style="float: left; margin-right: 10px;">
+          <label for="">Código:</label><br>
+          <label for="">Modelo:</label>
+        </div>
+        <div style="float: left;">
+          <input id="campoCodigo" type="number"><br>
+          <input id="campoModelo" type="text" size="50">
+        </div>
+      </div>
+    </div>
+
+    <div style="clear: both; float: left; width: 35%; height: 40%; margin: 5px;" class="caixa">
+      <div style="margin: 2px;">
+        <div style="float: left;margin-right: 10px;">
+          <label for="">Situação:</label><br>
+          <label for="">Valor:</label><br>
+          <label for="">Data:</label><br>
+        </div>
+        <div style="float: left;">
+          <input id="campoSituacao" type="checkbox"><br>
+          <input id="campoValor" type="number" step="0.1"><br>
+          <input id="campoData" type="date">
+        </div>
+      </div>
+    </div>
+
+    <div style="float: left; width: 35%; height: 40%; margin: 5px;" class="caixa">
+      <div style="margin: 2px;">
+        <div style="float: left;margin-right: 10px;">
+          <label for="">Observações:</label><br>
+        </div>
+        <div style="float: left;">
+          <textarea id="campoObservacoes" rows="4" cols="35"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div style="clear: both;margin-left: 30%;">
+      <button id="btnCadastrar">Cadastrar</button>
+      <button id="btnLimpar">Limpar</button>
+    </div>
+  </div>
+
+  <div class="centro">
+    <table id="tabelaVeiculos" border="1">
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Data</th>
+        <th scope="col">Valor</th>
+      </tr>
+      <tbody id="corpoTabela">
+      </tbody>
+    </table>
+  </div>
+
+  <script type="text/javascript">
+    $("#btnCadastrar").click(function() {
+      
+      var campoCodigo = document.getElementById("campoCodigo").value;
+      var campoModelo = document.getElementById("campoModelo").value;
+      var campoValor = document.getElementById("campoValor").value;
+      var campoData = document.getElementById("campoData").value;
+      var campoObservacoes = document.getElementById("campoObservacoes").value;
+      
+      
+      if (campoCodigo < 1 || campoCodigo > 10000) {
+        alert("Código inválido! Deve ser entre 1 e 10.000.");
+        return;
+      }
+      
+      
+      if (campoModelo.length < 1 || campoModelo.length > 1000) {
+        alert("Modelo inválido! Deve ter entre 1 e 1000 caracteres.");
+        return;
+      }
+      
+      
+      if (campoValor < 1000 || campoValor > 10000) {
+        alert("Valor inválido! Deve ser entre R$ 1.000,00 e R$ 10.000,00.");
+        return;
+      }
+      
+      
+      var dataAtual = new Date();
+      var dataInserida = new Date(campoData);
+      if (dataInserida >= dataAtual) {
+        alert("Data inválida! Deve ser inferior à data atual.");
+        return;
+      }
+      
+      
+      var tabela = document.getElementById("corpoTabela");
+      var novaLinha = tabela.insertRow();
+      novaLinha.insertCell(0).textContent = campoCodigo;
+      novaLinha.insertCell(1).textContent = campoModelo;
+      novaLinha.insertCell(2).textContent = campoData;
+      novaLinha.insertCell(3).textContent = campoValor;
+      
+      
+      limparCampos();
+    });
+
+    $("#btnLimpar").click(function() {
+      limparCampos();
+    });
+
+    function limparCampos() {
+      document.getElementById("campoCodigo").value = "";
+      document.getElementById("campoModelo").value = "";
+      document.getElementById("campoSituacao").checked = false;
+      document.getElementById("campoValor").value = "";
+      document.getElementById("campoData").value = "";
+      document.getElementById("campoObservacoes").value = "";
+    }
+  </script>
+</body>
+</html>
